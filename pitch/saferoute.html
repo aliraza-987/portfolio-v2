@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeRouteAI — Pitch Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           SAFEROUTE AI — EXACT APP DESIGN LANGUAGE
+           bg: #0f1117  sidebar: #1a1a2e  cards: #1e2130
+           red: #ef4444  orange: #f97316  green: #22c55e
+           fonts: Syne display, Space Grotesk body, Space Mono mono
+           ============================================ */
+        :root {
+            --bg:           #0f1117;
+            --bg-card:      #1a1d27;
+            --bg-card2:     #1e2130;
+            --bg-hover:     #252838;
+            --red:          #ef4444;
+            --red-dark:     #dc2626;
+            --red-glow:     rgba(239,68,68,0.18);
+            --red-border:   rgba(239,68,68,0.25);
+            --orange:       #f97316;
+            --orange-glow:  rgba(249,115,22,0.15);
+            --amber:        #f59e0b;
+            --green:        #22c55e;
+            --green-glow:   rgba(34,197,94,0.15);
+            --blue:         #3b82f6;
+            --text:         #f1f5f9;
+            --text-2:       #94a3b8;
+            --text-3:       #475569;
+            --border:       rgba(255,255,255,0.07);
+            --border-red:   rgba(239,68,68,0.2);
+
+            --font-d: 'Syne', sans-serif;
+            --font-b: 'Space Grotesk', sans-serif;
+            --font-m: 'Space Mono', monospace;
+
+            --title:  clamp(2.4rem, 6vw, 5.8rem);
+            --h2:     clamp(1.5rem, 3.5vw, 3rem);
+            --h3:     clamp(1rem, 2vw, 1.55rem);
+            --body:   clamp(0.75rem, 1.3vw, 1rem);
+            --small:  clamp(0.62rem, 1vw, 0.82rem);
+            --pad:    clamp(1.5rem, 5vw, 5rem);
+            --gap:    clamp(0.7rem, 1.8vw, 1.8rem);
+
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --dur: 0.65s;
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html, body { height:100%; overflow-x:hidden; }
+        html { scroll-behavior:smooth; }
+        body { background:#0f1117; color:var(--text); font-family:var(--font-b); overflow:hidden; }
+
+        /* ---- SLIDE BASE ---- */
+        .slide {
+            width:100vw; height:100vh; height:100dvh;
+            overflow:hidden;
+            display:flex; flex-direction:column; position:relative;
+            background:#0f1117;
+        }
+
+        /* Alternating slide bg like InterviewIQ */
+        #s1 { background:#0f1117; }
+        #s2 { background:#0c0f18; }
+        #s3 { background:#0f1117; }
+        #s4 { background:#0c0f18; }
+        #s5 { background:#0f1117; }
+        #s6 { background:#0c0f18; }
+        #s7 { background:#0f1117; }
+        #s8 { background:#0c0f18; }
+        .sc {
+            flex:1; display:flex; flex-direction:column;
+            justify-content:center; max-height:100%;
+            overflow:hidden; padding:var(--pad);
+            padding-top:clamp(3rem,5vh,5rem);
+        }
+
+        /* ---- PROGRESS BAR ---- */
+        .prog {
+            position:fixed; top:0; left:0; height:2px;
+            background:linear-gradient(90deg, var(--red), var(--orange));
+            width:0%; z-index:9999; transition:width 0.3s ease;
+            box-shadow:0 0 10px var(--red);
+        }
+
+        /* ---- NAV DOTS ---- */
+        .nav-dots {
+            position:fixed; right:clamp(0.8rem,2vw,1.4rem);
+            top:50%; transform:translateY(-50%);
+            display:flex; flex-direction:column;
+            gap:clamp(5px,0.8vh,9px); z-index:1000;
+        }
+        .nav-dot {
+            width:6px; height:6px; border-radius:50%;
+            background:var(--text-3); cursor:pointer;
+            transition:all 0.3s ease; border:none; padding:0;
+        }
+        .nav-dot.active {
+            background:var(--red);
+            box-shadow:0 0 8px var(--red);
+            transform:scale(1.6);
+        }
+
+        /* ---- SLIDE NUM ---- */
+        .sn {
+            font-family:var(--font-m); font-size:var(--small);
+            color:var(--text-3); position:absolute;
+            bottom:clamp(1rem,2.5vh,1.8rem); right:var(--pad);
+        }
+
+        /* ---- REVEAL SYSTEM (InterviewIQ style) ---- */
+        .r  { opacity:0; transform:translateY(26px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+        .rl { opacity:0; transform:translateX(-26px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+        .rs { opacity:0; transform:scale(0.93); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+        .slide.visible .r, .slide.visible .rl, .slide.visible .rs { opacity:1; transform:none; }
+        .d1{transition-delay:.05s} .d2{transition-delay:.15s} .d3{transition-delay:.25s}
+        .d4{transition-delay:.35s} .d5{transition-delay:.45s} .d6{transition-delay:.55s}
+        .d7{transition-delay:.65s} .d8{transition-delay:.75s}
+
+        /* ---- SHARED COMPONENTS ---- */
+        h1 { font-family:var(--font-d); font-size:var(--title); font-weight:800; line-height:0.93; letter-spacing:-0.02em; }
+        h2 { font-family:var(--font-d); font-size:var(--h2); font-weight:700; line-height:1.1; letter-spacing:-0.01em; }
+        h3 { font-family:var(--font-d); font-size:var(--h3); font-weight:600; line-height:1.2; }
+        p  { font-size:var(--body); line-height:1.65; color:var(--text-2); }
+
+        .label {
+            font-family:var(--font-m); font-size:var(--small);
+            color:var(--red); letter-spacing:0.18em;
+            text-transform:uppercase; margin-bottom:clamp(0.5rem,1.5vh,1.2rem);
+        }
+        .divider {
+            width:clamp(36px,5vw,70px); height:2px;
+            background:linear-gradient(90deg, var(--red), transparent);
+            margin:clamp(0.5rem,1.5vh,1.2rem) 0;
+        }
+        .card {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(10px,1.5vw,16px);
+            padding:clamp(0.8rem,1.8vw,1.8rem);
+        }
+
+        /* App-style pill tags */
+        .tag {
+            display:inline-flex; align-items:center; gap:0.4em;
+            padding:0.28em 0.75em; border-radius:999px;
+            font-family:var(--font-m); font-size:var(--small); border:1px solid;
+        }
+        .tag-red    { color:var(--red);    border-color:var(--red-border);  background:var(--red-glow); }
+        .tag-orange { color:var(--orange); border-color:rgba(249,115,22,.25); background:var(--orange-glow); }
+        .tag-green  { color:var(--green);  border-color:rgba(34,197,94,.25);  background:var(--green-glow); }
+        .tag-blue   { color:var(--blue);   border-color:rgba(59,130,246,.25); background:rgba(59,130,246,.12); }
+
+        /* Red glow text */
+        .red  { color:var(--red); text-shadow:0 0 35px rgba(239,68,68,0.4); }
+        .oran { color:var(--orange); }
+        .grn  { color:var(--green); }
+
+        /* App button style */
+        .app-btn {
+            display:inline-flex; align-items:center; gap:0.5em;
+            padding:clamp(0.55rem,1vw,0.9rem) clamp(1rem,2vw,1.8rem);
+            border-radius:8px; font-family:var(--font-b);
+            font-size:var(--body); font-weight:600;
+            text-decoration:none; border:none; cursor:pointer;
+            transition:transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .app-btn:hover { transform:translateY(-2px); }
+        .btn-red  { background:linear-gradient(135deg, var(--red), var(--red-dark)); color:#fff; box-shadow:0 4px 20px rgba(239,68,68,0.3); }
+        .btn-dark { background:var(--bg-card); color:var(--text); border:1px solid var(--border-red); }
+
+        /* InterviewIQ-style grid on every slide */
+        .map-bg {
+            position:absolute; inset:0; pointer-events:none; overflow:hidden;
+        }
+        .map-bg::before {
+            content:'';
+            position:absolute; inset:0;
+            background-image:
+                linear-gradient(rgba(239,68,68,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239,68,68,0.06) 1px, transparent 1px);
+            background-size:60px 60px;
+        }
+        /* Radial danger hotspot glow */
+        .hotspot {
+            position:absolute; border-radius:50%;
+            pointer-events:none;
+        }
+
+        /* Incident pin (app style) */
+        .ipin {
+            position:absolute; border-radius:50%;
+            animation:ping 2.2s ease-in-out infinite;
+        }
+        @keyframes ping {
+            0%,100% { transform:scale(1); opacity:0.9; }
+            50% { transform:scale(1.35); opacity:0.6; }
+        }
+
+        /* Breakpoints */
+        @media (max-height:700px) {
+            :root { --pad:clamp(1rem,3vw,2.5rem); --gap:clamp(0.4rem,1.2vw,1rem); --title:clamp(1.8rem,5vw,3.5rem); --h2:clamp(1.2rem,3vw,2rem); }
+        }
+        @media (max-height:600px) { .nav-dots,.sn{display:none} }
+        @media (prefers-reduced-motion:reduce) { *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.2s!important; } }
+
+
+        /* ================================================
+           SLIDE-SPECIFIC
+           ================================================ */
+
+        /* S1 HERO */
+        .hero-map-mock {
+            position:absolute;
+            right:clamp(1.5rem,5vw,7rem);
+            top:50%; transform:translateY(-50%);
+            width:clamp(220px,38vw,520px);
+            height:clamp(200px,42vh,460px);
+            border-radius:16px; overflow:hidden;
+            border:1px solid var(--border-red);
+            box-shadow:0 0 60px rgba(239,68,68,0.1), 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .mock-map-fill {
+            width:100%; height:100%;
+            /* Warm OSM-like beige/grey map feel */
+            background:linear-gradient(160deg, #1c2433 0%, #161c28 60%, #1a2030 100%);
+            position:relative;
+        }
+        /* Street lines to mimic map */
+        .mock-map-fill::before {
+            content:'';
+            position:absolute; inset:0;
+            background:
+                linear-gradient(rgba(245,220,180,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245,220,180,0.06) 1px, transparent 1px),
+                linear-gradient(45deg, rgba(245,220,180,0.02) 1px, transparent 1px);
+            background-size:32px 32px, 32px 32px, 64px 64px;
+        }
+        /* Coastal water area */
+        .mock-map-fill::after {
+            content:'';
+            position:absolute;
+            bottom:0; left:0; right:0; height:30%;
+            background:linear-gradient(to top, rgba(30,60,100,0.5), transparent);
+        }
+        .mock-topbar {
+            position:absolute; top:0; left:0; right:0;
+            padding:clamp(5px,.8vw,9px) clamp(8px,1.2vw,14px);
+            background:rgba(15,17,23,0.9); border-bottom:1px solid var(--border);
+            display:flex; align-items:center; justify-content:space-between;
+            font-family:var(--font-m); font-size:clamp(0.48rem,.78vw,.65rem);
+            color:var(--text-2); z-index:10;
+        }
+        .mock-city-pill {
+            background:var(--red); color:#fff;
+            padding:2px 8px; border-radius:999px;
+            font-size:clamp(0.42rem,.68vw,.58rem); font-weight:700;
+        }
+        .sos-pill {
+            position:absolute; bottom:10px; right:10px;
+            background:var(--red); color:#fff;
+            font-family:var(--font-m); font-size:clamp(0.44rem,.72vw,.62rem);
+            font-weight:700; padding:4px 12px; border-radius:999px;
+            letter-spacing:.08em; z-index:10;
+            animation:sos-pulse 1.3s ease-in-out infinite;
+        }
+        @keyframes sos-pulse {
+            0%,100%{ box-shadow:0 0 0 0 rgba(239,68,68,0.5); }
+            50%{ box-shadow:0 0 0 7px rgba(239,68,68,0); }
+        }
+
+        /* danger zone overlay on map */
+        .danger-zone {
+            position:absolute; border-radius:50%;
+            background:radial-gradient(circle, rgba(239,68,68,0.25) 0%, transparent 70%);
+            animation:zone-breathe 3s ease-in-out infinite;
+        }
+        @keyframes zone-breathe { 0%,100%{opacity:.7;} 50%{opacity:1;} }
+
+        /* S2 PROBLEM */
+        .prob-grid {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:clamp(0.5rem,1.2vw,1rem);
+            margin-top:clamp(0.7rem,1.8vh,1.4rem);
+        }
+        .prob-card {
+            background:var(--bg-card); border:1px solid var(--border-red);
+            border-radius:clamp(8px,1.2vw,14px);
+            padding:clamp(0.7rem,1.4vw,1.3rem);
+            position:relative; overflow:hidden;
+        }
+        .prob-card::before {
+            content:''; position:absolute;
+            top:0; left:0; right:0; height:2px;
+            background:linear-gradient(90deg, var(--red), var(--orange));
+        }
+        .prob-stat {
+            font-family:var(--font-d);
+            font-size:clamp(1.8rem,4vw,3.4rem);
+            font-weight:800; line-height:1; margin-bottom:.25em;
+        }
+        .prob-card h3 { font-size:clamp(0.8rem,1.3vw,1.05rem); color:var(--text); margin-bottom:.25em; }
+        .prob-card p  { font-size:clamp(0.6rem,.92vw,.8rem); }
+
+        /* S3 HOW IT WORKS */
+        .steps {
+            display:grid; grid-template-columns:repeat(4,1fr);
+            gap:clamp(0.5rem,1.2vw,1rem);
+            margin-top:clamp(0.7rem,1.8vh,1.4rem);
+        }
+        .step {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(10px,1.4vw,15px);
+            padding:clamp(0.8rem,1.5vw,1.4rem);
+            position:relative; overflow:hidden;
+        }
+        .step::before {
+            content:''; position:absolute;
+            top:0; left:0; right:0; height:2px;
+            background:linear-gradient(90deg, var(--red), var(--orange));
+        }
+        .step-n {
+            font-family:var(--font-m);
+            font-size:clamp(1.4rem,2.8vw,2.4rem);
+            font-weight:700; color:var(--text-3);
+            line-height:1; margin-bottom:.4em;
+        }
+        .step h3 { font-size:clamp(0.75rem,1.2vw,1rem); color:var(--red); margin-bottom:.3em; }
+        .step p  { font-size:clamp(0.6rem,.88vw,.78rem); }
+
+        /* S4 FEATURES — 3x2 grid */
+        .feat-grid {
+            display:grid; grid-template-columns:repeat(3,1fr);
+            gap:clamp(0.45rem,1vw,.9rem);
+            margin-top:clamp(0.7rem,1.8vh,1.4rem);
+        }
+        .feat {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(9px,1.2vw,13px);
+            padding:clamp(0.75rem,1.4vw,1.4rem);
+            position:relative; overflow:hidden;
+            transition:border-color .3s ease;
+        }
+        .feat:hover { border-color:var(--red-border); background:var(--bg-hover); }
+        .feat::after {
+            content:''; position:absolute;
+            bottom:0; left:0; right:0; height:1px;
+            background:linear-gradient(90deg, transparent, var(--red), transparent);
+            opacity:.35;
+        }
+        .feat-ico { font-size:clamp(1.1rem,2.2vw,1.7rem); margin-bottom:.4em; display:block; }
+        .feat h3  { font-size:clamp(0.75rem,1.2vw,.98rem); color:var(--text); margin-bottom:.28em; }
+        .feat p   { font-size:clamp(0.58rem,.85vw,.76rem); }
+
+        /* Danger ribbon on side */
+        .feat-danger { border-color:var(--red-border)!important; }
+        .feat-danger::before {
+            content:''; position:absolute;
+            top:0; left:0; bottom:0; width:2px;
+            background:var(--red);
+        }
+
+        /* S5 TECH STACK */
+        .stack-wrap {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:clamp(0.8rem,2vw,2rem);
+            margin-top:clamp(0.7rem,1.8vh,1.4rem);
+        }
+        .stack-col-title {
+            font-family:var(--font-m);
+            font-size:clamp(.6rem,.95vw,.8rem);
+            color:var(--red); letter-spacing:.15em;
+            text-transform:uppercase;
+            margin-bottom:clamp(.4rem,1vh,.9rem);
+            padding-bottom:.4em; border-bottom:1px solid var(--border-red);
+        }
+        .sitem {
+            display:flex; align-items:center; gap:.7em;
+            padding:clamp(.38rem,.75vw,.65rem) clamp(.55rem,.95vw,.9rem);
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(6px,.8vw,10px);
+            margin-bottom:clamp(.28rem,.55vh,.55rem);
+        }
+        .sico {
+            width:clamp(20px,2.5vw,30px); height:clamp(20px,2.5vw,30px);
+            border-radius:6px; display:flex; align-items:center;
+            justify-content:center; font-size:clamp(.65rem,1.1vw,.95rem); flex-shrink:0;
+        }
+        .sl { font-size:clamp(.68rem,1vw,.88rem); color:var(--text); font-weight:500; }
+        .ss { font-family:var(--font-m); font-size:clamp(.5rem,.75vw,.68rem); color:var(--text-3); }
+        .arch {
+            margin-top:clamp(.7rem,1.4vh,1.3rem);
+            padding:clamp(.45rem,.9vw,.8rem) clamp(.7rem,1.4vw,1.3rem);
+            background:var(--bg-card); border:1px solid var(--border-red);
+            border-radius:clamp(7px,1vw,11px);
+            font-family:var(--font-m);
+            font-size:clamp(.52rem,.82vw,.72rem);
+            color:var(--text-3); text-align:center; letter-spacing:.04em;
+        }
+
+        /* S6 TRACTION */
+        .trac {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:clamp(1rem,2.5vw,2.8rem); align-items:center;
+            margin-top:clamp(0.7rem,1.8vh,1.4rem);
+        }
+        .metrics {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:clamp(.45rem,.9vw,.85rem);
+        }
+        .met {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(9px,1.3vw,14px);
+            padding:clamp(.8rem,1.5vw,1.4rem); text-align:center;
+        }
+        .met-n {
+            font-family:var(--font-d);
+            font-size:clamp(1.5rem,3.3vw,2.8rem);
+            font-weight:800; line-height:1; margin-bottom:.2em;
+        }
+        .met-l { font-size:clamp(.58rem,.88vw,.78rem); color:var(--text-2); line-height:1.4; }
+
+        /* App-style status rows */
+        .status-list { display:flex; flex-direction:column; gap:clamp(.42rem,.9vh,.8rem); }
+        .srow {
+            display:flex; align-items:flex-start; gap:.8em;
+            padding:clamp(.48rem,.9vw,.85rem);
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(8px,1vw,12px);
+        }
+        .sdot {
+            width:clamp(6px,.95vw,9px); height:clamp(6px,.95vw,9px);
+            border-radius:50%; flex-shrink:0; margin-top:.38em;
+        }
+        .srow h3 { font-size:clamp(.75rem,1.15vw,.98rem); color:var(--text); margin-bottom:.15em; }
+        .srow p  { font-size:clamp(.58rem,.88vw,.76rem); }
+
+        /* S7 ROADMAP */
+        .road {
+            display:grid; grid-template-columns:repeat(4,1fr);
+            gap:clamp(.45rem,1vw,.9rem);
+            margin-top:clamp(0.7rem,1.8vh,1.4rem);
+        }
+        .phase {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:clamp(9px,1.3vw,14px);
+            padding:clamp(.8rem,1.5vw,1.4rem);
+            position:relative; overflow:hidden;
+        }
+        .ph-n {
+            font-family:var(--font-m); font-size:var(--small);
+            letter-spacing:.1em; margin-bottom:.5em;
+        }
+        .phase h3 { font-size:clamp(.78rem,1.25vw,1rem); color:var(--text); margin-bottom:.55em; }
+        .ph-list { list-style:none; display:flex; flex-direction:column; gap:.32em; }
+        .ph-list li { font-size:clamp(.58rem,.85vw,.76rem); color:var(--text-2); display:flex; align-items:center; gap:.38em; }
+        .ph-list li::before { content:'›'; font-weight:700; }
+        .ph1::before,.ph1 .ph-n { } /* colours set inline */
+
+        /* S8 CLOSING */
+        .cta-glow-el {
+            position:absolute;
+            width:clamp(300px,50vw,750px); height:clamp(300px,50vw,750px);
+            background:radial-gradient(circle, rgba(239,68,68,0.07) 0%, transparent 65%);
+            top:50%; left:50%; transform:translate(-50%,-50%);
+            pointer-events:none;
+        }
+        .cta-wrap { display:flex; flex-direction:column; align-items:flex-start; max-width:700px; }
+        .cta-eyebrow {
+            font-family:var(--font-m); font-size:var(--small);
+            color:var(--text-3); letter-spacing:.2em;
+            text-transform:uppercase; margin-bottom:clamp(.8rem,2vh,1.5rem);
+        }
+        .cta-btns { display:flex; gap:clamp(.55rem,1.3vw,1.1rem); flex-wrap:wrap; margin-top:clamp(.8rem,2vh,1.6rem); }
+        .cta-foot {
+            display:flex; gap:1.8rem; flex-wrap:wrap;
+            margin-top:clamp(1.4rem,3.5vh,2.8rem);
+        }
+        .cf-item .cf-l { font-family:var(--font-m); font-size:var(--small); color:var(--text-3); }
+        .cf-item .cf-v { font-size:clamp(.72rem,1.1vw,.95rem); color:var(--text); font-weight:600; }
+        .cf-div { width:1px; background:var(--border); }
+    </style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+
+<!-- ================================================  S1 HERO -->
+<section class="slide" id="s1">
+    <!-- Map background feel -->
+    <div class="map-bg">
+        <div class="hotspot" style="width:clamp(200px,30vw,420px);height:clamp(200px,30vw,420px);top:-8%;right:32%;background:radial-gradient(circle,rgba(239,68,68,0.07) 0%,transparent 70%);"></div>
+        <div class="hotspot" style="width:clamp(150px,22vw,320px);height:clamp(150px,22vw,320px);bottom:10%;left:8%;background:radial-gradient(circle,rgba(249,115,22,0.06) 0%,transparent 70%);"></div>
+    </div>
+
+    <!-- Animated map mock -->
+    <div class="hero-map-mock r d5">
+        <div class="mock-map-fill">
+            <div class="mock-topbar">
+                <span>🛡️ SafeRouteAI &nbsp;·&nbsp; LIVE</span>
+                <span class="mock-city-pill">Mumbai</span>
+            </div>
+            <!-- Danger zones -->
+            <div class="danger-zone" style="width:80px;height:80px;top:35%;left:38%;animation-delay:0s;"></div>
+            <div class="danger-zone" style="width:60px;height:60px;top:55%;left:20%;animation-delay:1s;"></div>
+            <div class="danger-zone" style="width:50px;height:50px;top:28%;left:60%;animation-delay:0.5s;"></div>
+            <!-- Incident pins — red/orange like the real app -->
+            <div class="ipin" style="width:12px;height:12px;background:#ef4444;top:38%;left:42%;animation-delay:0s;"></div>
+            <div class="ipin" style="width:10px;height:10px;background:#f97316;top:32%;left:58%;animation-delay:.3s;"></div>
+            <div class="ipin" style="width:11px;height:11px;background:#ef4444;top:56%;left:24%;animation-delay:.6s;"></div>
+            <div class="ipin" style="width:9px;height:9px;background:#f59e0b;top:50%;left:68%;animation-delay:.9s;"></div>
+            <div class="ipin" style="width:10px;height:10px;background:#f97316;top:44%;left:30%;animation-delay:.4s;"></div>
+            <div class="ipin" style="width:8px;height:8px;background:#ef4444;top:62%;left:52%;animation-delay:.7s;"></div>
+            <!-- Safety score popup snippet -->
+            <div style="position:absolute;top:16%;right:8%;background:rgba(26,29,39,0.95);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:6px 10px;z-index:10;">
+                <div style="font-family:'Space Mono',monospace;font-size:clamp(0.38rem,.6vw,.52rem);color:#94a3b8;margin-bottom:2px;">Safety Level</div>
+                <div style="display:flex;align-items:center;gap:5px;">
+                    <div style="font-family:'Syne',sans-serif;font-size:clamp(.7rem,1.1vw,.95rem);font-weight:800;color:#ef4444;">36</div>
+                    <div style="background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.35);border-radius:999px;padding:1px 6px;font-size:clamp(.32rem,.5vw,.44rem);color:#ef4444;font-family:'Space Mono',monospace;">High Risk</div>
+                </div>
+            </div>
+            <div class="sos-pill">🆘 SOS Emergency</div>
+        </div>
+    </div>
+
+    <div class="sc">
+        <div style="max-width:52%;">
+            <div style="display:flex;align-items:center;gap:.8em;margin-bottom:clamp(.8rem,2vh,1.6rem);" class="r d1">
+                <div style="width:clamp(22px,3vw,44px);height:1px;background:var(--red);"></div>
+                <span class="tag tag-red">🛡️ Women's Safety · AI Navigation</span>
+            </div>
+            <h1 class="r d2">Safe<span class="red">Route</span><br>AI</h1>
+            <p class="r d3" style="font-size:clamp(.82rem,1.7vw,1.25rem);max-width:48ch;margin-top:clamp(.7rem,1.8vh,1.4rem);margin-bottom:clamp(.8rem,2vh,1.6rem);">
+                Real-time AI safety navigation for women across Mumbai &amp; Delhi — 162+ incidents, live AI scoring, one-tap SOS.
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:.55rem;" class="r d4">
+                <span class="tag tag-red">🗺️ Live Safety Map</span>
+                <span class="tag tag-red">🆘 SOS Emergency</span>
+                <span class="tag tag-orange">🤖 LLaMA 3.3-70B</span>
+                <span class="tag tag-green">📍 162+ Incidents</span>
+            </div>
+        </div>
+    </div>
+    <div class="sn">01 / 08</div>
+</section>
+
+
+<!-- ================================================  S2 PROBLEM -->
+<section class="slide" id="s2">
+    <div class="map-bg">
+        <div class="hotspot" style="width:clamp(250px,35vw,500px);height:clamp(250px,35vw,500px);top:-15%;right:-8%;background:radial-gradient(circle,rgba(239,68,68,0.08) 0%,transparent 70%);"></div>
+    </div>
+    <div class="sc">
+        <div class="label r d1">// the problem</div>
+        <h2 class="r d2">Navigation apps optimize for speed.<br><span class="red">Not for survival.</span></h2>
+        <div class="divider r d3"></div>
+        <p class="r d3" style="max-width:62ch;margin-bottom:clamp(.6rem,1.5vh,1.2rem);">
+            In India's two largest cities, women navigating unfamiliar areas at night have zero tools that combine real incident data with AI-powered route safety scoring.
+        </p>
+        <div class="prob-grid r d4">
+            <div class="prob-card">
+                <div class="prob-stat" style="color:var(--red);">0</div>
+                <h3>Safety-aware map apps</h3>
+                <p>Google Maps, Apple Maps, Ola — none surface AI-powered safety scores or incident history for women.</p>
+            </div>
+            <div class="prob-card">
+                <div class="prob-stat" style="color:var(--orange);">2 cities</div>
+                <h3>Highest risk urban zones</h3>
+                <p>Mumbai & Delhi account for a disproportionate share of crimes against women (NCRB data).</p>
+            </div>
+            <div class="prob-card">
+                <div class="prob-stat" style="color:var(--amber);">Night</div>
+                <h3>Peak-risk window, zero tooling</h3>
+                <p>Evening and late-night travel carries highest risk — current apps have zero time-of-day safety awareness.</p>
+            </div>
+            <div class="prob-card">
+                <div class="prob-stat" style="color:var(--text-2);">Real-time</div>
+                <h3>Data exists but isn't weaponized</h3>
+                <p>Incident reports are scattered across platforms — no tool synthesizes them into live AI-scored safety routes.</p>
+            </div>
+        </div>
+    </div>
+    <div class="sn">02 / 08</div>
+</section>
+
+
+<!-- ================================================  S3 HOW IT WORKS -->
+<section class="slide" id="s3">
+    <div class="map-bg"></div>
+    <div class="sc">
+        <div class="label r d1">// how it works</div>
+        <h2 class="r d2">Four steps.<br><span class="red">Map click to safety score.</span></h2>
+        <div class="divider r d3"></div>
+        <div class="steps">
+            <div class="step r d3">
+                <div class="step-n">01</div>
+                <h3>Open the Map</h3>
+                <p>Leaflet.js renders a live interactive map of Mumbai or Delhi — red &amp; orange incident pins overlaid on real OpenStreetMap tiles.</p>
+            </div>
+            <div class="step r d4">
+                <div class="step-n">02</div>
+                <h3>Click Any Area</h3>
+                <p>User taps a location. Flask backend captures coordinates and queries the SQLite incident database for all nearby reports.</p>
+            </div>
+            <div class="step r d5">
+                <div class="step-n">03</div>
+                <h3>AI Scores Safety</h3>
+                <p>Groq-hosted LLaMA 3.3-70B synthesizes incident density, time of day, and severity into a 0–100 safety score with natural language reasoning.</p>
+            </div>
+            <div class="step r d6">
+                <div class="step-n">04</div>
+                <h3>SOS Anytime</h3>
+                <p>One-tap SOS always visible — surfaces 112, 1091 (Women Helpline), 100, and 1096 (Nirbhaya) instantly. No navigation needed.</p>
+            </div>
+        </div>
+    </div>
+    <div class="sn">03 / 08</div>
+</section>
+
+
+<!-- ================================================  S4 FEATURES -->
+<section class="slide" id="s4">
+    <div class="map-bg"></div>
+    <div class="sc">
+        <div class="label r d1">// core features</div>
+        <h2 class="r d2">Everything a safety app<br><span class="red">should have — and doesn't.</span></h2>
+        <div class="divider r d3"></div>
+        <div class="feat-grid">
+            <div class="feat feat-danger r d3">
+                <span class="feat-ico">🗺️</span>
+                <h3>Live Incident Map</h3>
+                <p>Red &amp; orange pins across Mumbai &amp; Delhi. Filters by harassment, poor lighting, stalking, unsafe area, theft.</p>
+            </div>
+            <div class="feat feat-danger r d4">
+                <span class="feat-ico">🤖</span>
+                <h3>AI Safety Scoring</h3>
+                <p>LLaMA 3.3-70B generates a 0–100 safety score per zone — score + natural language reasoning, not just a number.</p>
+            </div>
+            <div class="feat feat-danger r d5">
+                <span class="feat-ico">🆘</span>
+                <h3>One-Tap SOS</h3>
+                <p>Emergency button always on screen. Surfaces 112, 1091, 100, 1096 with a single tap — no navigation required.</p>
+            </div>
+            <div class="feat r d4">
+                <span class="feat-ico">⚠️</span>
+                <h3>Community Reporting</h3>
+                <p>Users submit incidents directly from the map — pinned live and fed back into AI scoring in real time.</p>
+            </div>
+            <div class="feat r d5">
+                <span class="feat-ico">📊</span>
+                <h3>Area Stats Panel</h3>
+                <p>Per-city breakdown by incident type, top hotspot areas, and safest times of day — pulled from the live database.</p>
+            </div>
+            <div class="feat r d6">
+                <span class="feat-ico">🏙️</span>
+                <h3>Mumbai + Delhi Toggle</h3>
+                <p>Instant city switch — separate incident datasets, separate map views, same AI engine scoring both cities.</p>
+            </div>
+        </div>
+    </div>
+    <div class="sn">04 / 08</div>
+</section>
+
+
+<!-- ================================================  S5 TECH STACK -->
+<section class="slide" id="s5">
+    <div class="map-bg"></div>
+    <div class="sc">
+        <div class="label r d1">// tech stack</div>
+        <h2 class="r d2">Built lean.<br><span class="red">Deployed fast. Costs nothing.</span></h2>
+        <div class="divider r d3"></div>
+        <div class="stack-wrap r d4">
+            <div>
+                <div class="stack-col-title">Backend</div>
+                <div class="sitem">
+                    <div class="sico" style="background:rgba(239,68,68,.08);">🐍</div>
+                    <div><div class="sl">Flask</div><div class="ss">Python backend · clean routing · minimal overhead</div></div>
+                </div>
+                <div class="sitem">
+                    <div class="sico" style="background:rgba(249,115,22,.08);">⚡</div>
+                    <div><div class="sl">Groq API · LLaMA 3.3-70B</div><div class="ss">Ultra-fast inference · free tier · production-grade AI</div></div>
+                </div>
+                <div class="sitem">
+                    <div class="sico" style="background:rgba(124,77,255,.08);">🗄️</div>
+                    <div><div class="sl">SQLite</div><div class="ss">162+ pre-seeded incidents · zero config · persistent store</div></div>
+                </div>
+            </div>
+            <div>
+                <div class="stack-col-title">Frontend &amp; Infra</div>
+                <div class="sitem">
+                    <div class="sico" style="background:rgba(34,197,94,.08);">🗺️</div>
+                    <div><div class="sl">Leaflet.js</div><div class="ss">Open-source maps · custom pin layers · city toggle</div></div>
+                </div>
+                <div class="sitem">
+                    <div class="sico" style="background:rgba(59,130,246,.08);">🌐</div>
+                    <div><div class="sl">Render (Free Tier)</div><div class="ss">Auto-deploy · always-on · globally accessible · zero cost</div></div>
+                </div>
+                <div class="sitem">
+                    <div class="sico" style="background:rgba(255,255,255,.05);">🐙</div>
+                    <div><div class="sl">GitHub · aliraza-987/SafeRouteAI</div><div class="ss">Fully open-source · version controlled</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="arch r d5">
+            User clicks map &nbsp;→&nbsp; Flask backend &nbsp;→&nbsp; SQLite incident query &nbsp;→&nbsp; Groq LLaMA 3.3-70B &nbsp;→&nbsp; Safety score + reasoning &nbsp;→&nbsp; Leaflet map overlay
+        </div>
+    </div>
+    <div class="sn">05 / 08</div>
+</section>
+
+
+<!-- ================================================  S6 TRACTION -->
+<section class="slide" id="s6">
+    <div class="map-bg">
+        <div class="hotspot" style="width:clamp(200px,28vw,400px);height:clamp(200px,28vw,400px);bottom:-5%;left:-5%;background:radial-gradient(circle,rgba(239,68,68,0.06) 0%,transparent 70%);"></div>
+    </div>
+    <div class="sc">
+        <div class="label r d1">// status &amp; traction</div>
+        <h2 class="r d2">A deployed product.<br><span class="red">A real-world mission.</span></h2>
+        <div class="divider r d3"></div>
+        <div class="trac">
+            <div class="metrics r d4">
+                <div class="met">
+                    <div class="met-n" style="color:var(--red);">162+</div>
+                    <div class="met-l">Incident records seeded across Mumbai &amp; Delhi</div>
+                </div>
+                <div class="met">
+                    <div class="met-n" style="color:var(--orange);">2</div>
+                    <div class="met-l">Major Indian cities covered from day one</div>
+                </div>
+                <div class="met">
+                    <div class="met-n" style="color:var(--green);">Live</div>
+                    <div class="met-l">Deployed on Render — globally accessible, free</div>
+                </div>
+                <div class="met">
+                    <div class="met-n" style="color:var(--text-2);">Solo</div>
+                    <div class="met-l">Built entirely alone — no team, no budget</div>
+                </div>
+            </div>
+            <div class="status-list r d5">
+                <div class="srow">
+                    <div class="sdot" style="background:var(--green);box-shadow:0 0 8px var(--green);"></div>
+                    <div>
+                        <h3>Fully Deployed & Live</h3>
+                        <p>saferouteai-zbf0.onrender.com — working Flask app, real AI scoring, real SOS emergency flows.</p>
+                    </div>
+                </div>
+                <div class="srow">
+                    <div class="sdot" style="background:var(--red);box-shadow:0 0 8px var(--red);"></div>
+                    <div>
+                        <h3>Open Source</h3>
+                        <p>Full codebase at aliraza-987/SafeRouteAI — community can contribute incident data for new cities.</p>
+                    </div>
+                </div>
+                <div class="srow">
+                    <div class="sdot" style="background:var(--orange);box-shadow:0 0 8px var(--orange);"></div>
+                    <div>
+                        <h3>Community Reporting Active</h3>
+                        <p>Users submit incidents from the live map — reports feed directly into the AI scoring model.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sn">06 / 08</div>
+</section>
+
+
+<!-- ================================================  S7 ROADMAP -->
+<section class="slide" id="s7">
+    <div class="map-bg"></div>
+    <div class="sc">
+        <div class="label r d1">// roadmap</div>
+        <h2 class="r d2">What SafeRouteAI<br><span class="red">becomes next.</span></h2>
+        <div class="divider r d3"></div>
+        <div class="road">
+            <div class="phase r d3">
+                <div class="ph-n" style="color:var(--red);">Phase 01</div>
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);"></div>
+                <h3>Enhanced AI</h3>
+                <ul class="ph-list" style="--c:var(--red);">
+                    <li style="--c:var(--red);">Route-level safety scoring</li>
+                    <li>Time-aware predictions</li>
+                    <li>Natural language input</li>
+                    <li>Safer-route suggestions</li>
+                </ul>
+            </div>
+            <div class="phase r d4">
+                <div class="ph-n" style="color:var(--orange);">Phase 02</div>
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></div>
+                <h3>More Cities</h3>
+                <ul class="ph-list">
+                    <li>Bengaluru &amp; Hyderabad</li>
+                    <li>Pune &amp; Chennai</li>
+                    <li>Kolkata &amp; Ahmedabad</li>
+                    <li>User-contributed data</li>
+                </ul>
+            </div>
+            <div class="phase r d5">
+                <div class="ph-n" style="color:var(--amber);">Phase 03</div>
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--amber);"></div>
+                <h3>Community</h3>
+                <ul class="ph-list">
+                    <li>Verified incident alerts</li>
+                    <li>Safe-zone check-ins</li>
+                    <li>Trusted contacts system</li>
+                    <li>Real-time crowd safety</li>
+                </ul>
+            </div>
+            <div class="phase r d6">
+                <div class="ph-n" style="color:var(--blue);">Phase 04</div>
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);"></div>
+                <h3>Platform</h3>
+                <ul class="ph-list">
+                    <li>Android &amp; iOS app</li>
+                    <li>Routing API integration</li>
+                    <li>NGO / police partnerships</li>
+                    <li>Open data API</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="sn">07 / 08</div>
+</section>
+
+
+<!-- ================================================  S8 CLOSING CTA -->
+<section class="slide" id="s8">
+    <div class="map-bg"></div>
+    <div class="cta-glow-el"></div>
+    <div class="sc">
+        <div class="cta-wrap">
+            <div class="cta-eyebrow r d1">ready to make navigation safer for everyone</div>
+            <h1 class="r d2">The safety map<br><span class="red">women deserve.</span></h1>
+            <p class="r d3" style="font-size:clamp(.82rem,1.55vw,1.15rem);max-width:54ch;margin-top:clamp(.5rem,1.2vh,1rem);">
+                SafeRouteAI is live, open-source, and built to scale. Explore the app, study the code, or help bring it to your city.
+            </p>
+            <div class="cta-btns r d4">
+                <a href="https://saferouteai-zbf0.onrender.com" target="_blank" class="app-btn btn-red">🛡️ Try SafeRouteAI Live</a>
+                <a href="https://github.com/aliraza-987/SafeRouteAI" target="_blank" class="app-btn btn-dark">🐙 View on GitHub</a>
+            </div>
+            <div class="cta-foot r d6">
+                <div class="cf-item">
+                    <div class="cf-l">Built by</div>
+                    <div class="cf-v">Ali Raza Syed</div>
+                </div>
+                <div class="cf-div"></div>
+                <div class="cf-item">
+                    <div class="cf-l">Live at</div>
+                    <div class="cf-v" style="font-family:var(--font-m);font-size:clamp(.6rem,.95vw,.8rem);color:var(--red);">saferouteai-zbf0.onrender.com</div>
+                </div>
+                <div class="cf-div"></div>
+                <div class="cf-item">
+                    <div class="cf-l">Stack</div>
+                    <div class="cf-v">Flask · Groq · Leaflet · SQLite</div>
+                </div>
+                <div class="cf-div"></div>
+                <div class="cf-item">
+                    <div class="cf-l">Also built</div>
+                    <div class="cf-v">InterviewIQ · ML Portfolio</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sn">08 / 08</div>
+</section>
+
+
+<script>
+    class SlidePresentation {
+        constructor() {
+            this.slides = document.querySelectorAll('.slide');
+            this.total = this.slides.length;
+            this.cur = 0;
+            this.touchY = 0;
+            this.prog = document.getElementById('prog');
+            this.dotsEl = document.getElementById('navDots');
+            this.init();
+        }
+        init() {
+            this.buildDots();
+            this.observe();
+            this.keyboard();
+            this.touch();
+            this.wheel();
+        }
+        buildDots() {
+            this.dots = [];
+            this.slides.forEach((_, i) => {
+                const d = document.createElement('button');
+                d.className = 'nav-dot' + (i===0?' active':'');
+                d.setAttribute('aria-label', `Slide ${i+1}`);
+                d.addEventListener('click', () => this.go(i));
+                this.dotsEl.appendChild(d);
+                this.dots.push(d);
+            });
+        }
+        observe() {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        const i = Array.from(this.slides).indexOf(e.target);
+                        this.ui(i);
+                    }
+                });
+            }, { threshold: 0.5 });
+            this.slides.forEach(s => io.observe(s));
+        }
+        ui(i) {
+            this.cur = i;
+            this.prog.style.width = ((i+1)/this.total*100) + '%';
+            this.dots.forEach((d,j) => d.classList.toggle('active', j===i));
+        }
+        go(i) {
+            if (i<0||i>=this.total) return;
+            this.slides[i].scrollIntoView({ behavior:'smooth' });
+        }
+        keyboard() {
+            document.addEventListener('keydown', e => {
+                const m = {'ArrowDown':1,'ArrowRight':1,' ':1,'PageDown':1,'ArrowUp':-1,'ArrowLeft':-1,'PageUp':-1};
+                if (m[e.key]!==undefined) { e.preventDefault(); this.go(this.cur+m[e.key]); }
+                if (e.key==='Home') { e.preventDefault(); this.go(0); }
+                if (e.key==='End')  { e.preventDefault(); this.go(this.total-1); }
+            });
+        }
+        touch() {
+            document.addEventListener('touchstart', e => { this.touchY=e.touches[0].clientY; }, {passive:true});
+            document.addEventListener('touchend', e => {
+                const dy = this.touchY - e.changedTouches[0].clientY;
+                if (Math.abs(dy)>50) this.go(this.cur+(dy>0?1:-1));
+            }, {passive:true});
+        }
+        wheel() {
+            let locked = false;
+            document.addEventListener('wheel', e => {
+                e.preventDefault();
+                if (locked) return;
+                locked = true;
+                this.go(this.cur + (e.deltaY > 0 ? 1 : -1));
+                setTimeout(() => { locked = false; }, 1000);
+            }, {passive:false});
+        }
+    }
+    new SlidePresentation();
+</script>
+</body>
+</html>

@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterviewIQ — Pitch Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES — INTERVIEWIQ THEME
+           ============================================ */
+        :root {
+            --bg-primary: #060c1a;
+            --bg-secondary: #0d1a2e;
+            --bg-card: rgba(255,255,255,0.04);
+            --bg-card-hover: rgba(255,255,255,0.07);
+
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff88;
+            --accent-purple: #7c3aed;
+            --accent-orange: #ff6b35;
+            --accent-glow-cyan: rgba(0, 229, 255, 0.15);
+            --accent-glow-green: rgba(0, 255, 136, 0.15);
+
+            --text-primary: #f0f4ff;
+            --text-secondary: #7a91b0;
+            --text-muted: #3d5070;
+
+            --border: rgba(0, 229, 255, 0.12);
+            --border-strong: rgba(0, 229, 255, 0.3);
+
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'Space Grotesk', sans-serif;
+
+            --title-size: clamp(2.2rem, 6vw, 5.5rem);
+            --h2-size: clamp(1.5rem, 3.5vw, 3rem);
+            --h3-size: clamp(1rem, 2vw, 1.6rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --mono-size: clamp(0.65rem, 1vw, 0.85rem);
+
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(0.8rem, 2vw, 2rem);
+            --element-gap: clamp(0.4rem, 1vw, 0.9rem);
+
+            --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration: 0.7s;
+        }
+
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow: hidden;
+        }
+
+        /* ============================================
+           VIEWPORT BASE — MANDATORY SLIDE RULES
+           ============================================ */
+        html, body { height: 100%; overflow-x: hidden; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        /* ============================================
+           GLOBAL BACKGROUND — GRID + PARTICLES
+           ============================================ */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        /* ============================================
+           ANIMATIONS — REVEAL SYSTEM
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity var(--duration) var(--ease-expo),
+                        transform var(--duration) var(--ease-expo);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-28px);
+            transition: opacity var(--duration) var(--ease-expo),
+                        transform var(--duration) var(--ease-expo);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity var(--duration) var(--ease-expo),
+                        transform var(--duration) var(--ease-expo);
+        }
+
+        .slide.visible .reveal,
+        .slide.visible .reveal-left,
+        .slide.visible .reveal-scale {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Stagger delays */
+        .d1 { transition-delay: 0.05s; }
+        .d2 { transition-delay: 0.15s; }
+        .d3 { transition-delay: 0.25s; }
+        .d4 { transition-delay: 0.35s; }
+        .d5 { transition-delay: 0.45s; }
+        .d6 { transition-delay: 0.55s; }
+        .d7 { transition-delay: 0.65s; }
+        .d8 { transition-delay: 0.75s; }
+
+        /* ============================================
+           SHARED COMPONENTS
+           ============================================ */
+        .slide-label {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            color: var(--accent-cyan);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
+        }
+
+        .slide-num {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            position: absolute;
+            bottom: clamp(1rem, 3vh, 2rem);
+            right: var(--slide-padding);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em;
+            padding: 0.3em 0.8em;
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            border: 1px solid;
+        }
+        .tag-cyan { border-color: var(--accent-cyan); color: var(--accent-cyan); background: var(--accent-glow-cyan); }
+        .tag-green { border-color: var(--accent-green); color: var(--accent-green); background: var(--accent-glow-green); }
+        .tag-orange { border-color: var(--accent-orange); color: var(--accent-orange); background: rgba(255,107,53,0.1); }
+
+        .divider {
+            width: clamp(40px, 6vw, 80px);
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), transparent);
+            margin: clamp(0.5rem, 1.5vh, 1.2rem) 0;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(10px, 1.5vw, 16px);
+            padding: clamp(0.8rem, 2vw, 1.8rem);
+            backdrop-filter: blur(12px);
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        p { font-size: var(--body-size); line-height: 1.65; color: var(--text-secondary); }
+
+        .text-cyan { color: var(--accent-cyan); }
+        .text-green { color: var(--accent-green); }
+        .text-white { color: var(--text-primary); }
+
+        /* ============================================
+           PROGRESS BAR
+           ============================================ */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 12px var(--accent-cyan);
+        }
+
+        /* ============================================
+           NAV DOTS
+           ============================================ */
+        .nav-dots {
+            position: fixed;
+            right: clamp(1rem, 2vw, 1.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, 1vh, 10px);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 8px var(--accent-cyan);
+            transform: scale(1.5);
+        }
+
+        /* ============================================
+           SLIDE 1 — TITLE
+           ============================================ */
+        #slide-1 {
+            background: var(--bg-primary);
+        }
+
+        .title-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+            margin-bottom: clamp(1rem, 2.5vh, 2rem);
+        }
+
+        .title-eyebrow-line {
+            width: clamp(24px, 3vw, 48px);
+            height: 1px;
+            background: var(--accent-cyan);
+        }
+
+        .hero-title {
+            line-height: 0.92;
+            margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .hero-title .word-iq {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 40px rgba(0,229,255,0.4);
+        }
+
+        .hero-sub {
+            font-size: clamp(0.85rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 55ch;
+            line-height: 1.6;
+            margin-bottom: clamp(1rem, 3vh, 2.5rem);
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .hero-glow-1 {
+            width: clamp(200px, 30vw, 500px);
+            height: clamp(200px, 30vw, 500px);
+            background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 70%);
+            top: -10%;
+            right: -5%;
+        }
+
+        .hero-glow-2 {
+            width: clamp(150px, 20vw, 350px);
+            height: clamp(150px, 20vw, 350px);
+            background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
+            bottom: 10%;
+            left: 5%;
+        }
+
+        /* Animated terminal cursor */
+        .cursor-blink {
+            display: inline-block;
+            width: 0.08em;
+            height: 1em;
+            background: var(--accent-cyan);
+            margin-left: 0.05em;
+            vertical-align: middle;
+            animation: blink 1.1s step-end infinite;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* ============================================
+           SLIDE 2 — THE PROBLEM
+           ============================================ */
+        #slide-2 { background: linear-gradient(135deg, #060c1a 0%, #0a1020 100%); }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .problem-card {
+            background: rgba(255,60,60,0.05);
+            border: 1px solid rgba(255,60,60,0.15);
+            border-radius: clamp(8px, 1.2vw, 14px);
+            padding: clamp(0.7rem, 1.5vw, 1.4rem);
+        }
+
+        .problem-icon {
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            margin-bottom: 0.4em;
+        }
+
+        .problem-card h3 {
+            font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+            color: var(--text-primary);
+            margin-bottom: 0.3em;
+        }
+
+        .problem-card p {
+            font-size: clamp(0.65rem, 1vw, 0.85rem);
+        }
+
+        .stat-highlight {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 800;
+            color: #ff4444;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(255,68,68,0.3);
+        }
+
+        /* ============================================
+           SLIDE 3 — THE SOLUTION
+           ============================================ */
+        #slide-3 { background: var(--bg-primary); }
+
+        .solution-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 3vw, 3rem);
+            align-items: center;
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .solution-features {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1.2vh, 1rem);
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8em;
+            padding: clamp(0.5rem, 1vw, 0.9rem);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(8px, 1vw, 12px);
+        }
+
+        .feature-dot {
+            width: clamp(6px, 1vw, 10px);
+            height: clamp(6px, 1vw, 10px);
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 0.35em;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        .feature-row h3 {
+            font-size: clamp(0.78rem, 1.2vw, 1rem);
+            color: var(--text-primary);
+            margin-bottom: 0.15em;
+        }
+
+        .feature-row p { font-size: clamp(0.62rem, 0.9vw, 0.8rem); }
+
+        .mock-screen {
+            background: #080e1c;
+            border: 1px solid var(--border-strong);
+            border-radius: clamp(10px, 1.5vw, 18px);
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0,229,255,0.08), 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .mock-titlebar {
+            background: #0d1828;
+            padding: clamp(0.4rem, 1vh, 0.8rem) clamp(0.6rem, 1.5vw, 1.2rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mock-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        .mock-body {
+            padding: clamp(0.8rem, 1.5vw, 1.4rem);
+        }
+
+        .mock-message {
+            padding: clamp(0.4rem, 0.8vw, 0.7rem) clamp(0.6rem, 1vw, 1rem);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: clamp(0.55rem, 0.85vw, 0.75rem);
+            margin-bottom: clamp(0.3rem, 0.6vh, 0.6rem);
+            line-height: 1.4;
+        }
+
+        .mock-ai { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); color: var(--accent-cyan); }
+        .mock-user { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-secondary); margin-left: 10%; }
+
+        /* ============================================
+           SLIDE 4 — HOW IT WORKS
+           ============================================ */
+        #slide-4 { background: linear-gradient(135deg, #060c1a, #0b1120); }
+
+        .steps-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 1.5vw, 1.2rem);
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+            align-items: start;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(10px, 1.5vw, 16px);
+            padding: clamp(0.7rem, 1.5vw, 1.4rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+        }
+
+        .step-num {
+            font-family: var(--font-mono);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1;
+            margin-bottom: 0.4em;
+        }
+
+        .step-card h3 {
+            font-size: clamp(0.78rem, 1.2vw, 1.05rem);
+            color: var(--accent-cyan);
+            margin-bottom: 0.35em;
+        }
+
+        .step-card p { font-size: clamp(0.62rem, 0.9vw, 0.8rem); }
+
+        /* ============================================
+           SLIDE 5 — INTERVIEW TYPES
+           ============================================ */
+        #slide-5 { background: var(--bg-primary); }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+            flex: 1;
+        }
+
+        .type-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(10px, 1.5vw, 18px);
+            padding: clamp(0.8rem, 1.8vw, 1.6rem);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .type-card:hover { border-color: var(--accent-cyan); background: var(--bg-card-hover); }
+
+        .type-icon { font-size: clamp(1.2rem, 2.5vw, 2rem); margin-bottom: 0.4em; }
+
+        .type-card h3 {
+            font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+            color: var(--text-primary);
+            margin-bottom: 0.3em;
+        }
+
+        .type-card p { font-size: clamp(0.62rem, 0.9vw, 0.82rem); margin-bottom: 0.5em; }
+
+        .difficulty-pills {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            font-family: var(--font-mono);
+            font-size: clamp(0.5rem, 0.75vw, 0.68rem);
+            padding: 0.2em 0.55em;
+            border-radius: 100px;
+            border: 1px solid;
+        }
+
+        .pill-easy { color: var(--accent-green); border-color: var(--accent-green); background: var(--accent-glow-green); }
+        .pill-med { color: #fbbf24; border-color: #fbbf24; background: rgba(251,191,36,0.1); }
+        .pill-hard { color: #f87171; border-color: #f87171; background: rgba(248,113,113,0.1); }
+
+        .type-accent {
+            position: absolute;
+            top: 0; right: 0;
+            width: clamp(40px, 6vw, 80px);
+            height: clamp(40px, 6vw, 80px);
+            border-radius: 0 0 0 100%;
+            opacity: 0.15;
+        }
+
+        /* ============================================
+           SLIDE 6 — TECH STACK
+           ============================================ */
+        #slide-6 { background: linear-gradient(135deg, #060c1a, #08121e); }
+
+        .stack-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(0.8rem, 2vw, 2rem);
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .stack-col h3 {
+            font-family: var(--font-mono);
+            font-size: clamp(0.65rem, 1vw, 0.85rem);
+            color: var(--accent-cyan);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: clamp(0.5rem, 1.2vh, 1rem);
+            padding-bottom: 0.5em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stack-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7em;
+            padding: clamp(0.4rem, 0.8vw, 0.7rem) clamp(0.6rem, 1vw, 1rem);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(6px, 0.8vw, 10px);
+            margin-bottom: clamp(0.3rem, 0.6vh, 0.6rem);
+        }
+
+        .stack-icon {
+            width: clamp(20px, 2.5vw, 30px);
+            height: clamp(20px, 2.5vw, 30px);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(0.7rem, 1.2vw, 1rem);
+            flex-shrink: 0;
+        }
+
+        .stack-item-label {
+            font-size: clamp(0.68rem, 1vw, 0.88rem);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .stack-item-sub {
+            font-family: var(--font-mono);
+            font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           SLIDE 7 — KEY FEATURES
+           ============================================ */
+        #slide-7 { background: var(--bg-primary); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .feat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(10px, 1.2vw, 14px);
+            padding: clamp(0.7rem, 1.5vw, 1.4rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .feat-emoji { font-size: clamp(1.2rem, 2.5vw, 1.8rem); margin-bottom: 0.4em; display: block; }
+
+        .feat-card h3 {
+            font-size: clamp(0.78rem, 1.2vw, 1rem);
+            color: var(--text-primary);
+            margin-bottom: 0.3em;
+        }
+
+        .feat-card p { font-size: clamp(0.6rem, 0.88vw, 0.78rem); }
+
+        /* ============================================
+           SLIDE 8 — TRACTION / STATUS
+           ============================================ */
+        #slide-8 { background: linear-gradient(135deg, #060c1a, #0a1020); }
+
+        .traction-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 3vw, 3rem);
+            align-items: center;
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .metric-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(0.5rem, 1vw, 0.9rem);
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: clamp(10px, 1.2vw, 14px);
+            padding: clamp(0.8rem, 1.5vw, 1.4rem);
+            text-align: center;
+        }
+
+        .metric-val {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.2em;
+        }
+
+        .metric-label {
+            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            color: var(--text-secondary);
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1.2vh, 1rem);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8em;
+        }
+
+        .timeline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 0.35em;
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: clamp(0.6rem, 0.88vw, 0.75rem);
+            color: var(--text-muted);
+            margin-bottom: 0.1em;
+        }
+
+        .timeline-text {
+            font-size: clamp(0.68rem, 1vw, 0.88rem);
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           SLIDE 9 — ROADMAP
+           ============================================ */
+        #slide-9 { background: var(--bg-primary); }
+
+        .roadmap-phases {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .phase-card {
+            border-radius: clamp(10px, 1.5vw, 16px);
+            padding: clamp(0.8rem, 1.8vw, 1.6rem);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid;
+        }
+
+        .phase-num {
+            font-family: var(--font-mono);
+            font-size: clamp(0.55rem, 0.85vw, 0.72rem);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.4em;
+            opacity: 0.7;
+        }
+
+        .phase-card h3 {
+            font-size: clamp(0.82rem, 1.3vw, 1.1rem);
+            margin-bottom: 0.5em;
+        }
+
+        .phase-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+
+        .phase-items li {
+            font-size: clamp(0.6rem, 0.88vw, 0.78rem);
+            color: var(--text-secondary);
+            padding-left: 1em;
+            position: relative;
+        }
+
+        .phase-items li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        /* Phase colors */
+        .phase-1 { background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.2); }
+        .phase-1 h3 { color: var(--accent-cyan); }
+        .phase-1 .phase-num { color: var(--accent-cyan); }
+
+        .phase-2 { background: rgba(0,255,136,0.04); border-color: rgba(0,255,136,0.15); }
+        .phase-2 h3 { color: var(--accent-green); }
+        .phase-2 .phase-num { color: var(--accent-green); }
+
+        .phase-3 { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.2); }
+        .phase-3 h3 { color: #a78bfa; }
+        .phase-3 .phase-num { color: #a78bfa; }
+
+        .phase-4 { background: rgba(255,107,53,0.04); border-color: rgba(255,107,53,0.15); }
+        .phase-4 h3 { color: var(--accent-orange); }
+        .phase-4 .phase-num { color: var(--accent-orange); }
+
+        /* ============================================
+           SLIDE 10 — CLOSING / CTA
+           ============================================ */
+        #slide-10 { background: var(--bg-primary); }
+
+        .cta-center {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .cta-tagline {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            color: var(--accent-cyan);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 5.5vw, 5rem);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+        }
+
+        .cta-title .glow {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 40px rgba(0,229,255,0.5);
+        }
+
+        .cta-sub {
+            font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+            color: var(--text-secondary);
+            max-width: 45ch;
+            text-align: center;
+            margin-bottom: clamp(1.2rem, 3vh, 2.5rem);
+        }
+
+        .cta-links {
+            display: flex;
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.65em 1.4em;
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: clamp(0.65rem, 1vw, 0.85rem);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-btn-primary {
+            background: var(--accent-cyan);
+            color: #060c1a;
+            border: 1px solid var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .cta-btn-primary:hover {
+            box-shadow: 0 0 30px rgba(0,229,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .cta-btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid var(--border-strong);
+        }
+
+        .cta-btn-secondary:hover {
+            background: var(--accent-glow-cyan);
+            transform: translateY(-2px);
+        }
+
+        .cta-glow {
+            position: absolute;
+            width: clamp(300px, 50vw, 700px);
+            height: clamp(300px, 50vw, 700px);
+            background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 65%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* ============================================
+           RESPONSIVE BREAKPOINTS
+           ============================================ */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+            }
+            .problem-grid, .types-grid, .metric-cards { gap: 0.4rem; }
+            .steps-row, .roadmap-phases, .features-grid { gap: 0.4rem; }
+        }
+
+        @media (max-height: 600px) {
+            :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); }
+            .nav-dots { display: none; }
+        }
+
+        @media (max-height: 500px) {
+            :root { --slide-padding: clamp(0.4rem, 2vw, 1rem); }
+        }
+
+        @media (max-width: 700px) {
+            .solution-split, .stack-layout, .traction-split { grid-template-columns: 1fr; }
+            .steps-row, .roadmap-phases { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .types-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+<!-- ================================================
+     SLIDE 1 — TITLE
+     ================================================ -->
+<section class="slide" id="slide-1">
+    <div class="bg-grid"></div>
+    <div class="bg-glow hero-glow-1"></div>
+    <div class="bg-glow hero-glow-2"></div>
+
+    <div class="slide-content">
+        <div class="title-eyebrow reveal d1">
+            <div class="title-eyebrow-line"></div>
+            <span class="tag tag-cyan">AI-Powered Interview Prep</span>
+        </div>
+
+        <h1 class="hero-title reveal d2">
+            Interview<span class="word-iq">IQ</span><span class="cursor-blink"></span>
+        </h1>
+
+        <p class="hero-sub reveal d3">
+            The AI interviewer that prepares candidates for real-world technical and behavioral interviews — adaptive, realistic, and available 24/7.
+        </p>
+
+        <div class="hero-badges reveal d4">
+            <span class="tag tag-cyan">🤖 LLM-Powered</span>
+            <span class="tag tag-green">⚡ Real-time Streaming</span>
+            <span class="tag tag-orange">🎯 4 Interview Types</span>
+        </div>
+    </div>
+
+    <div class="slide-num">01 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 2 — THE PROBLEM
+     ================================================ -->
+<section class="slide" id="slide-2">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">The Problem</div>
+        <h2 class="reveal d2">Interview prep is <span style="color:#ff4444;">broken.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="problem-grid reveal d3">
+            <div class="problem-card">
+                <div class="problem-icon">💸</div>
+                <h3>Coaching is expensive</h3>
+                <p>1-on-1 mock interview coaches charge $200–500/hr. Most candidates simply can't afford it.</p>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-icon">🕐</div>
+                <h3>Scheduling is a nightmare</h3>
+                <p>Coordinating schedules with peers or coaches adds friction when you need to practice right now.</p>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-icon">🤐</div>
+                <h3>No real feedback</h3>
+                <p>LeetCode and static resources don't talk back. Candidates practice in a vacuum with no adaptive challenge.</p>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-icon">😰</div>
+                <h3>Anxiety kills performance</h3>
+                <p>Without repeated realistic practice, candidates freeze in real interviews — even when they know the answers.</p>
+            </div>
+        </div>
+
+        <div class="reveal d5" style="margin-top: clamp(0.6rem, 1.5vh, 1.2rem);">
+            <span class="stat-highlight">76%</span>
+            <span style="color: var(--text-secondary); font-size: var(--body-size); margin-left: 0.5em;">of candidates fail interviews they're technically qualified for.</span>
+        </div>
+    </div>
+
+    <div class="slide-num">02 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 3 — THE SOLUTION
+     ================================================ -->
+<section class="slide" id="slide-3">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">The Solution</div>
+        <h2 class="reveal d2">Your AI interviewer, <span class="text-cyan">always ready.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="solution-split">
+            <div class="solution-features reveal d3">
+                <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h3>Adaptive AI Questioning</h3>
+                        <p>Groq-powered llama-3.3-70b asks realistic interview questions, detects your intent, and adapts in real time.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h3>All Interview Types</h3>
+                        <p>Coding, Behavioral, System Design, General — each with Easy / Medium / Hard difficulty.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h3>Streaming Responses</h3>
+                        <p>Server-Sent Events deliver AI responses token by token — the exact feel of a live conversation.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h3>Full History + Analytics</h3>
+                        <p>Track every session, search past interviews, monitor ratings, duration, and improvement over time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal-scale d4">
+                <div class="mock-screen">
+                    <div class="mock-titlebar">
+                        <div class="mock-dot" style="background:#ff5f57"></div>
+                        <div class="mock-dot" style="background:#febc2e"></div>
+                        <div class="mock-dot" style="background:#28c840"></div>
+                        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-left:0.5rem;">InterviewIQ — System Design</span>
+                    </div>
+                    <div class="mock-body">
+                        <div class="mock-message mock-ai">
+                            🤖 Let's design a URL shortener like bit.ly. Walk me through your high-level architecture. What would be your first considerations?
+                        </div>
+                        <div class="mock-message mock-user">
+                            I'd start with the core API — a POST /shorten endpoint and GET /{code} redirect. For scale, I'd use a distributed ID generator like Snowflake...
+                        </div>
+                        <div class="mock-message mock-ai">
+                            Good start. Now, how would you handle 10 billion URLs with read/write ratio of 100:1? Think about your DB choice carefully.
+                        </div>
+                        <div class="mock-message" style="background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.2);color:var(--text-muted);font-family:var(--font-mono);font-size:0.6rem;">
+                            <span style="color:var(--accent-cyan);">●</span> AI is thinking...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">03 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 4 — HOW IT WORKS
+     ================================================ -->
+<section class="slide" id="slide-4">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">How It Works</div>
+        <h2 class="reveal d2">From zero to <span class="text-cyan">interview-ready</span> in 4 steps.</h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="steps-row">
+            <div class="step-card reveal d3">
+                <div class="step-num">01</div>
+                <h3>Choose Your Arena</h3>
+                <p>Pick from Coding, Behavioral, System Design, or General. Set your difficulty — Easy, Medium, or Hard.</p>
+            </div>
+
+            <div class="step-card reveal d4">
+                <div class="step-num">02</div>
+                <h3>Start the Session</h3>
+                <p>The AI auto-detects your interview type from context and kicks off with a realistic opening question.</p>
+            </div>
+
+            <div class="step-card reveal d5">
+                <div class="step-num">03</div>
+                <h3>Practice Live</h3>
+                <p>Converse naturally — type or use voice input. Responses stream in real time. Up to 30 messages per session.</p>
+            </div>
+
+            <div class="step-card reveal d6">
+                <div class="step-num">04</div>
+                <h3>Review & Improve</h3>
+                <p>Save interviews, review history, export transcripts, and track analytics to see how you've grown.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">04 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 5 — INTERVIEW TYPES
+     ================================================ -->
+<section class="slide" id="slide-5">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">Product Depth</div>
+        <h2 class="reveal d2">Four modes. <span class="text-green">Infinite practice.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="types-grid">
+            <div class="type-card reveal d3">
+                <div class="type-accent" style="background:var(--accent-cyan)"></div>
+                <div class="type-icon">💻</div>
+                <h3>Coding Interview</h3>
+                <p>Data structures, algorithms, complexity analysis. Mimics FAANG-style technical rounds.</p>
+                <div class="difficulty-pills">
+                    <span class="pill pill-easy">Easy</span>
+                    <span class="pill pill-med">Medium</span>
+                    <span class="pill pill-hard">Hard</span>
+                </div>
+            </div>
+
+            <div class="type-card reveal d4">
+                <div class="type-accent" style="background:var(--accent-green)"></div>
+                <div class="type-icon">🗣️</div>
+                <h3>Behavioral Interview</h3>
+                <p>STAR-framework questions on leadership, conflict, failure. Covers Amazon LPs and more.</p>
+                <div class="difficulty-pills">
+                    <span class="pill pill-easy">Easy</span>
+                    <span class="pill pill-med">Medium</span>
+                    <span class="pill pill-hard">Hard</span>
+                </div>
+            </div>
+
+            <div class="type-card reveal d5">
+                <div class="type-accent" style="background:#a78bfa"></div>
+                <div class="type-icon">🏗️</div>
+                <h3>System Design</h3>
+                <p>Architect scalable systems from scratch. Covers APIs, databases, caching, load balancing, and tradeoffs.</p>
+                <div class="difficulty-pills">
+                    <span class="pill pill-easy">Easy</span>
+                    <span class="pill pill-med">Medium</span>
+                    <span class="pill pill-hard">Hard</span>
+                </div>
+            </div>
+
+            <div class="type-card reveal d6">
+                <div class="type-accent" style="background:var(--accent-orange)"></div>
+                <div class="type-icon">🎯</div>
+                <h3>General Interview</h3>
+                <p>Resume deep-dives, motivation, fit questions. Perfect for PM, analyst, and cross-functional roles.</p>
+                <div class="difficulty-pills">
+                    <span class="pill pill-easy">Easy</span>
+                    <span class="pill pill-med">Medium</span>
+                    <span class="pill pill-hard">Hard</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">05 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 6 — TECH STACK
+     ================================================ -->
+<section class="slide" id="slide-6">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">Under the Hood</div>
+        <h2 class="reveal d2">Built lean. Built <span class="text-cyan">fast.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="stack-layout reveal d3">
+            <div class="stack-col">
+                <h3>Backend</h3>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(0,229,255,0.1)">🐍</div>
+                    <div>
+                        <div class="stack-item-label">Flask 3.0</div>
+                        <div class="stack-item-sub">Python web framework · REST API</div>
+                    </div>
+                </div>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(0,255,136,0.1)">⚡</div>
+                    <div>
+                        <div class="stack-item-label">Groq API — llama-3.3-70b</div>
+                        <div class="stack-item-sub">LLM inference · ultra-fast streaming</div>
+                    </div>
+                </div>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(124,58,237,0.15)">🗄️</div>
+                    <div>
+                        <div class="stack-item-label">SQLite</div>
+                        <div class="stack-item-sub">Session storage · interview history</div>
+                    </div>
+                </div>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(255,107,53,0.1)">📡</div>
+                    <div>
+                        <div class="stack-item-label">Server-Sent Events (SSE)</div>
+                        <div class="stack-item-sub">20ms chunk delay · real-time streaming</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stack-col">
+                <h3>Frontend &amp; Infra</h3>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(0,229,255,0.1)">🎨</div>
+                    <div>
+                        <div class="stack-item-label">Vanilla JS + CSS</div>
+                        <div class="stack-item-sub">Single-file · no framework overhead</div>
+                    </div>
+                </div>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(0,255,136,0.1)">✍️</div>
+                    <div>
+                        <div class="stack-item-label">marked.js + highlight.js</div>
+                        <div class="stack-item-sub">Markdown render · syntax highlighting</div>
+                    </div>
+                </div>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(124,58,237,0.15)">🎙️</div>
+                    <div>
+                        <div class="stack-item-label">Web Speech API</div>
+                        <div class="stack-item-sub">Voice input · browser-native</div>
+                    </div>
+                </div>
+
+                <div class="stack-item">
+                    <div class="stack-icon" style="background:rgba(255,107,53,0.1)">☁️</div>
+                    <div>
+                        <div class="stack-item-label">Render.com</div>
+                        <div class="stack-item-sub">Deployed · auto-deploys on push to main</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">06 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 7 — KEY FEATURES
+     ================================================ -->
+<section class="slide" id="slide-7">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">Features</div>
+        <h2 class="reveal d2">Everything you need. <span class="text-green">Nothing you don't.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="features-grid">
+            <div class="feat-card reveal d3">
+                <span class="feat-emoji">🌙</span>
+                <h3>Light &amp; Dark Mode</h3>
+                <p>Persists to localStorage. Full CSS variable theming.</p>
+            </div>
+
+            <div class="feat-card reveal d3">
+                <span class="feat-emoji">📜</span>
+                <h3>Session History</h3>
+                <p>Sidebar with last 20 interviews. Search by keyword or type.</p>
+            </div>
+
+            <div class="feat-card reveal d3">
+                <span class="feat-emoji">📊</span>
+                <h3>Analytics Dashboard</h3>
+                <p>Ratings, durations, message counts, interview breakdown.</p>
+            </div>
+
+            <div class="feat-card reveal d5">
+                <span class="feat-emoji">📤</span>
+                <h3>Export Transcripts</h3>
+                <p>Download any session as a .txt file for review.</p>
+            </div>
+
+            <div class="feat-card reveal d5">
+                <span class="feat-emoji">🎙️</span>
+                <h3>Voice Input</h3>
+                <p>Speak your answers naturally via Web Speech API on deployed site.</p>
+            </div>
+
+            <div class="feat-card reveal d5">
+                <span class="feat-emoji">⚡</span>
+                <h3>Streaming AI</h3>
+                <p>Responses stream token-by-token with typing dots for a real interview feel.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">07 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 8 — TRACTION / STATUS
+     ================================================ -->
+<section class="slide" id="slide-8">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">Where We Are</div>
+        <h2 class="reveal d2">Built, deployed, and <span class="text-cyan">in testing.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="traction-split">
+            <div>
+                <div class="metric-cards reveal d3">
+                    <div class="metric-card">
+                        <div class="metric-val text-cyan">4</div>
+                        <div class="metric-label">Interview Types</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-val text-green">3</div>
+                        <div class="metric-label">Difficulty Levels</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-val" style="color:#a78bfa">30</div>
+                        <div class="metric-label">Msgs per Session</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-val" style="color:var(--accent-orange)">20</div>
+                        <div class="metric-label">History Sessions</div>
+                    </div>
+                </div>
+
+                <div class="card reveal d4" style="margin-top: clamp(0.6rem, 1.5vh, 1.2rem);">
+                    <p style="font-size: clamp(0.68rem, 1vw, 0.88rem);">
+                        🚀 <strong style="color:var(--text-primary)">Live at</strong>
+                        <span style="color:var(--accent-cyan); font-family:var(--font-mono);"> interviewiq-83bs.onrender.com</span>
+                        — real users actively testing the platform.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline reveal d4">
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--text-muted)"></div>
+                    <div>
+                        <div class="timeline-date">Oct 2025</div>
+                        <div class="timeline-text">Project started — core Flask + Groq integration</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--text-secondary)"></div>
+                    <div>
+                        <div class="timeline-date">Nov 2025</div>
+                        <div class="timeline-text">4 interview types + difficulty system shipped</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--accent-cyan)"></div>
+                    <div>
+                        <div class="timeline-date">Dec 2025</div>
+                        <div class="timeline-text">Analytics, history, export, voice input added</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--accent-green)"></div>
+                    <div>
+                        <div class="timeline-date">Jan 2026</div>
+                        <div class="timeline-text">Deployed to Render — live testing phase begins</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--accent-green);box-shadow:0 0 8px var(--accent-green)"></div>
+                    <div>
+                        <div class="timeline-date">Now</div>
+                        <div class="timeline-text">Active users, iterating on feedback, v2.0 in design</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">08 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 9 — ROADMAP
+     ================================================ -->
+<section class="slide" id="slide-9">
+    <div class="bg-grid"></div>
+
+    <div class="slide-content">
+        <div class="slide-label reveal d1">What's Next</div>
+        <h2 class="reveal d2">A bold <span class="text-cyan">v2.0 roadmap.</span></h2>
+        <div class="divider reveal d2"></div>
+
+        <div class="roadmap-phases">
+            <div class="phase-card phase-1 reveal d3">
+                <div class="phase-num">Phase 01</div>
+                <h3>Power Features</h3>
+                <ul class="phase-items">
+                    <li>Monaco code editor</li>
+                    <li>Voice-to-voice TTS</li>
+                    <li>Enhanced analytics</li>
+                    <li>Company-specific prep</li>
+                </ul>
+            </div>
+
+            <div class="phase-card phase-2 reveal d4">
+                <div class="phase-num">Phase 02</div>
+                <h3>Smart Scoring</h3>
+                <ul class="phase-items">
+                    <li>AI performance scoring</li>
+                    <li>PDF interview reports</li>
+                    <li>Skill gap analysis</li>
+                    <li>Improvement tracking</li>
+                </ul>
+            </div>
+
+            <div class="phase-card phase-3 reveal d5">
+                <div class="phase-num">Phase 03</div>
+                <h3>Community</h3>
+                <ul class="phase-items">
+                    <li>Peer practice matching</li>
+                    <li>Global leaderboards</li>
+                    <li>Shared question banks</li>
+                    <li>Study groups</li>
+                </ul>
+            </div>
+
+            <div class="phase-card phase-4 reveal d6">
+                <div class="phase-num">Phase 04</div>
+                <h3>Enterprise</h3>
+                <ul class="phase-items">
+                    <li>White-label platform</li>
+                    <li>Bootcamp licensing</li>
+                    <li>University partnerships</li>
+                    <li>B2B API access</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">09 / 10</div>
+</section>
+
+<!-- ================================================
+     SLIDE 10 — CLOSING CTA
+     ================================================ -->
+<section class="slide" id="slide-10">
+    <div class="bg-grid"></div>
+    <div class="cta-glow"></div>
+
+    <div class="slide-content">
+        <div class="cta-center">
+            <div class="cta-tagline reveal d1">Ready to change how people prepare</div>
+
+            <h1 class="cta-title reveal d2">
+                The smartest<br>
+                <span class="glow">interview prep</span><br>
+                ever built.
+            </h1>
+
+            <p class="cta-sub reveal d3">
+                InterviewIQ gives every candidate access to world-class interview practice — at zero cost, on demand, forever.
+            </p>
+
+            <div class="cta-links reveal d4">
+                <a href="https://interviewiq-83bs.onrender.com" target="_blank" class="cta-btn cta-btn-primary">
+                    🚀 Try InterviewIQ Live
+                </a>
+                <a href="https://github.com/aliraza-987/AI-Model-1---InterviewIQ" target="_blank" class="cta-btn cta-btn-secondary">
+                    ⭐ View on GitHub
+                </a>
+            </div>
+
+            <div class="reveal d6" style="margin-top:clamp(1.5rem,4vh,3rem);">
+                <div style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div style="font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-muted)">Built by</div>
+                        <div style="font-size:clamp(0.75rem,1.2vw,1rem);color:var(--text-primary);font-weight:600;">Ali Raza Syed</div>
+                    </div>
+                    <div style="width:1px;background:var(--border)"></div>
+                    <div style="text-align:center;">
+                        <div style="font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-muted)">Live at</div>
+                        <div style="font-size:clamp(0.65rem,1vw,0.85rem);color:var(--accent-cyan);font-family:var(--font-mono);">interviewiq-83bs.onrender.com</div>
+                    </div>
+                    <div style="width:1px;background:var(--border)"></div>
+                    <div style="text-align:center;">
+                        <div style="font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-muted)">Stack</div>
+                        <div style="font-size:clamp(0.75rem,1.2vw,1rem);color:var(--text-primary);font-weight:600;">Flask · Groq · SQLite</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-num">10 / 10</div>
+</section>
+
+<script>
+    /* ============================================
+       SLIDE PRESENTATION CONTROLLER
+       ============================================ */
+    class SlidePresentation {
+        constructor() {
+            this.slides = document.querySelectorAll('.slide');
+            this.totalSlides = this.slides.length;
+            this.currentIndex = 0;
+            this.isScrolling = false;
+            this.touchStartY = 0;
+
+            this.progressBar = document.getElementById('progressBar');
+            this.navDotsEl = document.getElementById('navDots');
+
+            this.init();
+        }
+
+        init() {
+            this.buildNavDots();
+            this.setupIntersectionObserver();
+            this.setupKeyboard();
+            this.setupTouch();
+            this.setupWheel();
+        }
+
+        /* Build nav dots */
+        buildNavDots() {
+            this.dots = [];
+            this.slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                dot.addEventListener('click', () => this.goTo(i));
+                this.navDotsEl.appendChild(dot);
+                this.dots.push(dot);
+            });
+        }
+
+        /* Intersection observer triggers .visible for animations */
+        setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const idx = Array.from(this.slides).indexOf(entry.target);
+                        this.updateUI(idx);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            this.slides.forEach(slide => observer.observe(slide));
+        }
+
+        /* Update progress bar and dots */
+        updateUI(idx) {
+            this.currentIndex = idx;
+            const pct = ((idx + 1) / this.totalSlides) * 100;
+            this.progressBar.style.width = pct + '%';
+
+            this.dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === idx);
+            });
+        }
+
+        /* Navigate to slide */
+        goTo(idx) {
+            if (idx < 0 || idx >= this.totalSlides) return;
+            this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* Keyboard nav */
+        setupKeyboard() {
+            document.addEventListener('keydown', e => {
+                const map = {
+                    'ArrowDown': 1, 'ArrowRight': 1, ' ': 1, 'PageDown': 1,
+                    'ArrowUp': -1, 'ArrowLeft': -1, 'PageUp': -1
+                };
+                if (map[e.key] !== undefined) {
+                    e.preventDefault();
+                    this.goTo(this.currentIndex + map[e.key]);
+                }
+                if (e.key === 'Home') { e.preventDefault(); this.goTo(0); }
+                if (e.key === 'End')  { e.preventDefault(); this.goTo(this.totalSlides - 1); }
+            });
+        }
+
+        /* Touch / swipe */
+        setupTouch() {
+            document.addEventListener('touchstart', e => {
+                this.touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            document.addEventListener('touchend', e => {
+                const dy = this.touchStartY - e.changedTouches[0].clientY;
+                if (Math.abs(dy) > 50) this.goTo(this.currentIndex + (dy > 0 ? 1 : -1));
+            }, { passive: true });
+        }
+
+        /* Mouse wheel nav (debounced) */
+        setupWheel() {
+            let lastWheel = 0;
+            document.addEventListener('wheel', e => {
+                e.preventDefault();
+                const now = Date.now();
+                if (now - lastWheel < 800) return;
+                lastWheel = now;
+                this.goTo(this.currentIndex + (e.deltaY > 0 ? 1 : -1));
+            }, { passive: false });
+        }
+    }
+
+    /* Boot */
+    new SlidePresentation();
+</script>
+
+</body>
+</html>
