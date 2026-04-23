@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ali Raza — AI Engineer</title>
+<title>Ali Raza  AI Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
@@ -27,9 +27,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opac
 .l-ticker{position:absolute;top:0;left:0;right:0;background:var(--red);color:var(--paper);font-family:var(--mono);font-size:10px;letter-spacing:.3em;padding:7px 0;overflow:hidden;}
 .l-ticker-track{display:inline-flex;white-space:nowrap;animation:tick 16s linear infinite;}
 .l-ticker-track span{padding:0 24px;}
-.l-center{text-align:center;position:relative;z-index:2;}
+.l-center{text-align:center;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;}
 .l-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.4em;color:rgba(240,236,224,.35);margin-bottom:28px;text-transform:uppercase;}
-.l-title{font-family:var(--huge);font-size:clamp(72px,15vw,220px);line-height:.82;letter-spacing:-.04em;text-transform:uppercase;color:var(--paper);margin-bottom:36px;}
+.l-title{font-family:var(--huge);font-size:clamp(52px,12vw,180px);line-height:.82;letter-spacing:-.04em;text-transform:uppercase;color:var(--paper);margin-bottom:24px;}
 .l-title .lt{overflow:hidden;display:block;}
 .l-title .lt span{display:inline-block;transform:translateY(110%);animation:riseIn 1s cubic-bezier(.16,.8,.3,1) forwards;}
 .l-title .lt:nth-child(1) span{animation-delay:.1s;}
@@ -38,7 +38,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opac
 .l-bar-w{width:280px;height:3px;background:rgba(240,236,224,.12);margin:0 auto 16px;}
 .l-bar{height:100%;background:var(--red);width:0%;transition:width .08s linear;}
 .l-pct{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:rgba(240,236,224,.45);}
-.l-enter{margin-top:36px;font-family:var(--huge);font-size:17px;color:var(--paper);text-transform:uppercase;border:2px solid rgba(240,236,224,.25);padding:13px 48px;cursor:pointer;opacity:0;transition:opacity .5s,background .2s;background:transparent;text-decoration:none;display:inline-block;letter-spacing:.2em;animation:pulseBorder 2s infinite;}
+.l-enter{margin-top:24px;font-family:var(--huge);font-size:17px;color:var(--paper);text-transform:uppercase;border:2px solid rgba(240,236,224,.25);padding:13px 48px;cursor:pointer;opacity:0;transition:opacity .5s,background .2s;background:transparent;text-decoration:none;display:inline-block;letter-spacing:.2em;animation:pulseBorder 2s infinite;}
 .l-enter.visible{opacity:1;}
 .l-enter:hover{background:var(--red);border-color:var(--red);color:var(--paper);}
 @keyframes pulseBorder{0%,100%{border-color:rgba(240,236,224,.25);}50%{border-color:rgba(255,45,26,.6);}}
@@ -60,6 +60,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opac
 .navbar nav a::after{content:'';position:absolute;bottom:0;left:0;right:100%;height:2px;background:var(--red);transition:right .3s;}
 .navbar nav a:hover::after{right:0;}
 .navbar nav a:hover{background:none;}
+.navbar .resume-btn{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:6px 16px;border:2px solid var(--red);color:var(--red);transition:all .2s;margin-left:12px;}
+.navbar .resume-btn:hover{background:var(--red);color:var(--paper);}
 
 /* COVER */
 .cover{position:relative;min-height:100vh;padding:130px 40px 40px;display:flex;flex-direction:column;justify-content:space-between;z-index:2;}
@@ -334,13 +336,14 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
     <a href="#timeline">story</a>
     <a href="#contact">hello</a>
   </nav>
+  <a href="resume/resume.pdf" target="_blank" rel="noopener" class="resume-btn">RESUME ↗</a>
 </div>
 
 <!-- COVER -->
 <div class="cover" id="cover">
   <div class="cover-head">
     <div><span class="stamp">ISSUE №001</span> &nbsp; VOL. ONE · MMXXVI</div>
-    <div class="live-date" id="liveClock">—</div>
+    <div class="live-date" id="liveClock"></div>
   </div>
   <div class="cover-main">
     <div class="eyebrow">THE BUILDER'S ISSUE · 18 · MUMBAI</div>
@@ -350,10 +353,10 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
     </h1>
     <div class="cover-sub">
       <div class="lede">
-        a portfolio? a <span class="underline">manifesto</span>? a <mark>printed complaint letter</mark> to the universe? — you decide.
+        a portfolio? a <span class="underline">manifesto</span>? a <mark>printed complaint letter</mark> to the universe?  you decide.
       </div>
       <div class="meta">
-        <div><span class="mlabel">WHO</span> Ali Raza, 18</div>
+        <div><span class="mlabel">WHO</span> Ali Raza Syed, 18</div>
         <div><span class="mlabel">WHERE</span> Mumbai, IN</div>
         <div><span class="mlabel">WHAT</span> AI · WEB · ML</div>
         <div><span class="mlabel">STATUS</span> <span style="color:var(--red);font-weight:700;">shipping</span></div>
@@ -383,10 +386,10 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
   </div>
   <div class="about">
     <div class="manifesto reveal">
-      <p>i build things. <em>real things</em> — not side projects living in a folder called "someday." software that runs on actual servers, handles actual requests, breaks in ways you didn't plan for, and <mark>gets fixed at 2am anyway.</mark></p>
+      <p>i build things. <em>real things</em>  not side projects living in a folder called "someday." software that runs on actual servers, handles actual requests, breaks in ways you didn't plan for, and <mark>gets fixed at 2am anyway.</mark></p>
       <div class="big"><span class="stroke">self</span><br/><span>taught.</span></div>
       <p>grade 9 was Java. grade 10 was top of class. grade 11 was: <em>forget school, i'm teaching myself Python, ML, and how to deploy things that don't fall over.</em> that decision worked out.</p>
-      <p>outside the terminal — i'm at the <mark>gym every night</mark>, no exceptions. conventional deadlift, structured splits, the same obsessive consistency i bring to code. i play cricket, i train MMA, i read anything worth reading. i debate ideas with anyone willing to go the full distance. <em>balance is overrated. intensity is the point.</em></p>
+      <p>outside the terminal  i'm at the <mark>gym every night</mark>, no exceptions. conventional deadlift, structured splits, the same obsessive consistency i bring to code. i play cricket, i train MMA, i read anything worth reading. i debate ideas with anyone willing to go the full distance. <em>balance is overrated. intensity is the point.</em></p>
     </div>
     <div class="side reveal">
       <h4>vitals</h4>
@@ -426,8 +429,8 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
           <div class="product-num">01</div>
           <div class="product-name">InterviewIQ</div>
           <div class="product-live-badge">LIVE · TESTING PHASE</div>
-          <div class="product-desc">An AI-powered mock interview platform that puts you in a real interview before you walk into one. Coding, behavioural, system design, and general rounds — at easy, medium, or hard — with a model that doesn't let you off easy.</div>
-          <div class="product-detail">Built entirely solo. Flask backend with Groq's LLaMA 3.3-70B handling all AI responses — streamed live via Server-Sent Events so answers feel like a real conversation, not a page reload. SQLite tracks session history and analytics. Voice input lets you speak your answers. Dark and light modes because detail matters.<br/><br/>The API went through three iterations — Anthropic, then Gemini, then Groq — before the latency and cost profile made sense for a zero-budget deployment. Every architectural decision was made under real constraints.</div>
+          <div class="product-desc">The AI interviewer that doesn't go easy on you  because the real one won't either. Built after realising that free, quality interview prep simply doesn't exist for most people.</div>
+          <div class="product-detail">Most platforms hand you a question list and a text box. InterviewIQ puts you in a live conversation  the AI follows up, challenges vague answers, and adapts in real time. Powered by Groq's LLaMA 3.3-70B with SSE streaming so responses feel instant, not generated. Four interview types across three difficulty levels. Voice input, session history, analytics. Built, iterated, and deployed entirely solo.</div>
           <div class="product-tags">
             <span class="product-tag">Flask</span><span class="product-tag">Groq LLaMA 3.3-70B</span><span class="product-tag">SQLite</span><span class="product-tag">SSE Streaming</span><span class="product-tag">Voice Input</span><span class="product-tag">Python</span><span class="product-tag">Oct 2025</span>
           </div>
@@ -438,14 +441,14 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
         </div>
         <div class="product-info-side">
           <div class="why-title">Why I built it</div>
-          <div class="why-text">Interview prep is broken. Most platforms give you a list of questions and a text box — that teaches memorisation, not thinking on your feet. I wanted something that simulates the dynamic of a real technical interview: a model that follows up, pushes back, and doesn't accept a vague answer.<br/><br/>Building it forced me to solve hard engineering problems: streaming responses without a frontend framework, managing conversation state across sessions, keeping latency low enough that the UX doesn't feel like waiting. Those constraints made me a better engineer.</div>
+          <div class="why-text">When I was preparing for my own interviews I couldn't find anything that actually simulated the pressure of a real conversation. Everything was static. I wanted something that pushed back  so I built it.<br/><br/>30+ users. 80+ interviews conducted. Still running at $0.</div>
           <ul class="product-stats">
-            <li><span class="sl">Type</span><span class="sv">AI Web App</span></li>
-            <li><span class="sl">Status</span><span class="sv">Testing Phase</span></li>
+            <li><span class="sl">Users</span><span class="sv">30+</span></li>
+            <li><span class="sl">Interviews</span><span class="sv">80+ conducted</span></li>
             <li><span class="sl">Interview types</span><span class="sv">4 (Coding / Behavioural / System Design / General)</span></li>
             <li><span class="sl">Difficulty</span><span class="sv">Easy · Medium · Hard</span></li>
+            <li><span class="sl">Status</span><span class="sv">Testing Phase</span></li>
             <li><span class="sl">Infra cost</span><span class="sv">$0</span></li>
-            <li><span class="sl">Deployed</span><span class="sv">Render</span></li>
           </ul>
         </div>
       </div>
@@ -454,14 +457,14 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
       <div class="img-slider" id="iiq-slider">
         <img src="images/interviewiq-home.png" alt="InterviewIQ Home" class="active"/>
         <img src="images/interviewiq-mobile.jpg" alt="InterviewIQ Mobile"/>
-        <button class="img-arr prev" onclick="slideImg('iiq',−1)">←</button>
+        <button class="img-arr prev" onclick="slideImg('iiq',-1)">←</button>
         <button class="img-arr next" onclick="slideImg('iiq',1)">→</button>
         <div class="img-nav-dots" id="iiq-nav"></div>
       </div>
     </div>
     <div class="product-panel" id="iiq-pitch">
       <div class="pitch-header">
-        <span>▶ PITCH DECK — INTERVIEWIQ</span>
+        <span>▶ PITCH DECK  INTERVIEWIQ</span>
         <button class="pitch-btn" onclick="openPitch('pitch/interviewiq.html','InterviewIQ Pitch Deck')">⛶ EXPAND</button>
       </div>
       <div class="pitch-frame"><iframe src="pitch/interviewiq.html" title="InterviewIQ Pitch Deck" loading="lazy"></iframe></div>
@@ -481,8 +484,8 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
           <div class="product-num">02</div>
           <div class="product-name">SafeRouteAI</div>
           <div class="product-live-badge">LIVE · SOCIAL IMPACT</div>
-          <div class="product-desc">A community-powered women's safety map for Mumbai and Delhi. Real incident data, AI-generated safety scores, and one-tap SOS — built because the problem is real, the gap was obvious, and no one was filling it.</div>
-          <div class="product-detail">162+ verified incidents seeded from Mumbai Police reports, NCRB 2023 data, and NARI 2025 national survey data — all on a Leaflet.js interactive map with Stadia Maps dark tiles. Groq LLaMA 3.3-70B generates plain-English safety scores (0–100) per location in real time. Users can report new incidents across 5 categories with upvoting, and trigger SOS contacts (112, 1091, 100, 1096) in one tap.<br/><br/>OpenStreetMap Nominatim handles location autocomplete. Zero-cost infrastructure with a keep-alive strategy for near-100% uptime on a free Render tier.</div>
+          <div class="product-desc">Real incident data. Real safety scores. Built for cities where this information should have existed already  and didn't.</div>
+          <div class="product-detail">Women's safety data in Indian cities exists  scattered across Mumbai Police reports, NCRB 2023 records, and NARI 2025 national survey data. SafeRouteAI puts it all in one place: an interactive map where every pin is a verified incident, every location gets an AI safety score from 0–100, and SOS help is one tap away. Users can report new incidents across 5 categories  the community has already added 25+ real reports. Groq LLaMA 3.3-70B generates plain-English safety assessments per location in real time.</div>
           <div class="product-tags">
             <span class="product-tag">Flask</span><span class="product-tag">Groq LLaMA 3.3-70B</span><span class="product-tag">Leaflet.js</span><span class="product-tag">SQLite</span><span class="product-tag">OpenStreetMap</span><span class="product-tag">Stadia Maps</span><span class="product-tag">Python</span>
           </div>
@@ -493,12 +496,12 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
         </div>
         <div class="product-info-side">
           <div class="why-title">Why I built it</div>
-          <div class="why-text">I grew up in Mumbai. I've seen what it looks like when good tools only reach people who already have everything. Safety information for women in Indian cities exists — buried in PDFs, police reports, disconnected surveys. Nobody had put it in one place, made it interactive, and made it free.<br/><br/>This project taught me that the hardest part of a social impact product isn't the code — it's the data. Finding, cleaning, and ethically using 162+ real incidents required as much rigour as the AI layer.</div>
+          <div class="why-text">I grew up in Mumbai. The data existed, the need was clear  it just wasn't in a form anyone could actually use. That felt like a solvable problem, so I solved it.<br/><br/>20+ users. 25+ community-reported incidents on top of 162+ verified ones. Still live, still free.</div>
           <ul class="product-stats">
-            <li><span class="sl">Type</span><span class="sv">AI Safety Web App</span></li>
-            <li><span class="sl">Status</span><span class="sv">Live</span></li>
+            <li><span class="sl">Users</span><span class="sv">20+</span></li>
+            <li><span class="sl">Verified incidents</span><span class="sv">162+</span></li>
+            <li><span class="sl">Community reports</span><span class="sv">25+ real user reports</span></li>
             <li><span class="sl">Cities</span><span class="sv">Mumbai + Delhi</span></li>
-            <li><span class="sl">Incidents</span><span class="sv">162+ verified</span></li>
             <li><span class="sl">SOS contacts</span><span class="sv">4 (one-tap)</span></li>
             <li><span class="sl">Infra cost</span><span class="sv">$0</span></li>
           </ul>
@@ -510,14 +513,14 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
         <img src="images/saferoute-map.png" alt="SafeRouteAI Map" class="active"/>
         <img src="images/saferoute-stats.png" alt="SafeRouteAI Stats"/>
         <img src="images/saferoute-banner.jpeg" alt="SafeRouteAI Banner"/>
-        <button class="img-arr prev" onclick="slideImg('sra',−1)">←</button>
+        <button class="img-arr prev" onclick="slideImg('sra',-1)">←</button>
         <button class="img-arr next" onclick="slideImg('sra',1)">→</button>
         <div class="img-nav-dots" id="sra-nav"></div>
       </div>
     </div>
     <div class="product-panel" id="sra-pitch">
       <div class="pitch-header">
-        <span>▶ PITCH DECK — SAFEROUTEAI</span>
+        <span>▶ PITCH DECK  SAFEROUTEAI</span>
         <button class="pitch-btn" onclick="openPitch('pitch/saferoute.html','SafeRouteAI Pitch Deck')">⛶ EXPAND</button>
       </div>
       <div class="pitch-frame"><iframe src="pitch/saferoute.html" title="SafeRouteAI Pitch Deck" loading="lazy"></iframe></div>
@@ -536,14 +539,14 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
     <div class="other-card reveal">
       <div class="o-num">01</div>
       <h4>BERT Sentiment</h4>
-      <p>Fine-tuned BERT on IMDB reviews. ~92–93% accuracy. The moment classical NLP gave way to transformers — it worked first try.</p>
+      <p>Fine-tuned BERT on IMDB reviews. ~92–93% accuracy. The moment classical NLP gave way to transformers  it worked first try.</p>
       <div class="o-tags"><span class="o-tag">BERT</span><span class="o-tag">HuggingFace</span><span class="o-tag">NLP</span><span class="o-tag">~93%</span></div>
       <div class="o-foot"><a href="https://github.com/aliraza-987/bert-sentiment-analyzer" target="_blank" rel="noopener">↗ GITHUB</a></div>
     </div>
     <div class="other-card yellow reveal">
       <div class="o-num">02</div>
       <h4>Image Classifier CNN</h4>
-      <p>PyTorch CNN on CIFAR-10. ~78% accuracy. No pretrained backbone — convolutions, pooling, and stubbornness until it converged.</p>
+      <p>PyTorch CNN on CIFAR-10. ~78% accuracy. No pretrained backbone  convolutions, pooling, and stubbornness until it converged.</p>
       <div class="o-tags"><span class="o-tag">PyTorch</span><span class="o-tag">CNN</span><span class="o-tag">CIFAR-10</span><span class="o-tag">~78%</span></div>
       <div class="o-foot"><a href="https://github.com/aliraza-987/image-classifier" target="_blank" rel="noopener">↗ GITHUB</a></div>
     </div>
@@ -572,7 +575,7 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
     you learn by<br/>
     <span class="box"><span>shipping something</span></span><br/>
     broken &amp; fixing it.
-    <span class="cite">— note to self · 2025</span>
+    <span class="cite"> note to self · 2025</span>
   </div>
 </section>
 
@@ -611,7 +614,7 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
       <div class="tl-content">
         <span class="tl-label">Grade 11 · Self-taught</span>
         <h4>Python, ML, the Internet</h4>
-        <p>Decided to build my own track. Taught myself HTML, CSS, JS, Python, and data science entirely outside school. No class, no handholding — build, break, search, repeat.</p>
+        <p>Decided to build my own track. Taught myself HTML, CSS, JS, Python, and data science entirely outside school. No class, no handholding  build, break, search, repeat.</p>
       </div>
     </div>
 
@@ -621,7 +624,7 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
       <div class="tl-content">
         <span class="tl-label">Grade 12 · HSC + Professional Work</span>
         <h4>Ships, Learns, Repeats</h4>
-        <p>Grade 12 HSC Maharashtra board — predicted 99/100 Maths, 98/100 IT. Alongside: built 8+ ML and DL projects, launched InterviewIQ and SafeRouteAI on real infrastructure, gained professional experience in AI, and applied to MBZUAI. Everything building toward one goal.</p>
+        <p>Grade 12 HSC Maharashtra board  predicted 99/100 Maths, 98/100 IT. Alongside: built 8+ ML and DL projects, launched InterviewIQ and SafeRouteAI on real infrastructure, gained professional experience in AI, and applied to MBZUAI. Everything building toward one goal.</p>
         <div class="tl-meta">Oct 2025: InterviewIQ launched · 2025: SafeRouteAI launched · 2026: MBZUAI application</div>
       </div>
     </div>
@@ -631,7 +634,7 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:20px;letter-spa
       <div class="tl-dot-col"><div class="tl-dot"></div></div>
       <div class="tl-content">
         <span class="tl-label">Next Chapter</span>
-        <h4>MBZUAI — BSc AI Engineering</h4>
+        <h4>MBZUAI  BSc AI Engineering</h4>
         <p>Mohamed bin Zayed University of Artificial Intelligence, Abu Dhabi. BSc AI Engineering. The goal everything above was building toward.</p>
       </div>
     </div>
